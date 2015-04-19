@@ -10,5 +10,16 @@ angular.module('splitwithfriendsApp', [
     $urlRouterProvider
       .otherwise('/');
 
+	    $stateProvider
+      .state('main', {
+        url: '/',
+        templateUrl: 'app/main/main.html',
+        controller: 'MainCtrl'
+      })
+	      .state('friends', {
+	      	url: '/friends',
+	      	templateUrl: 'app/friends/friends.html',
+	      	controller: 'FriendsCtrl'
+	      });
     $locationProvider.html5Mode(true);
   });
