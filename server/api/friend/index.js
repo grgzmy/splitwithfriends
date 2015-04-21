@@ -1,14 +1,24 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./friend.controller');
+var FriendController = require('./friend.controller');
+var Friend = require('../../models/friend');
 
-var router = express.Router();
+module.exports = function(db, config){
+  var router = express.Router();
+  var friend = new Friend(db, config.docdb.database_id, "Friends");
+  var controller = new FriendController(friend);
+  friend.init(function(err){
+    if(err) console.log(err);
+  });
 
-router.get('/', controller.index);
-router.get('/:id', controller.get);
-router.post('/', controller.create);
-router.put('/:id', controller.update);
-router.delete('/:id', controller.delete);
+  router.get('/', controller.index.bind(controller));
+  router.get('/:id', controller.show.bind(controller));
+  //TODO: Add an API that retrieves all the expenses for a friend.
+  //router.get('/:id/expenses');
+  router.post('/', controller.create.bind(controller));
+  router.put('/:id', controller.update.bind(controller));
+  router.delete('/:id', controller.destroy.bind(controller));
 
-module.exports = router;
+  return router;
+}
