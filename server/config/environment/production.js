@@ -13,11 +13,9 @@ module.exports = {
             process.env.PORT ||
             8080,
 
-  // MongoDB connection options
-  mongo: {
-    uri:    process.env.MONGOLAB_URI ||
-            process.env.MONGOHQ_URL ||
-            process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://localhost/splitwithfriends'
+  docdb: {
+    host: process.env.DOCDB_HOST,
+    auth_key: process.env.DOCDB_AUTH_KEY,
+    database_id: "SplitWithFriends"
   }
 };
