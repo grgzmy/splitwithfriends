@@ -1,0 +1,9 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<header>
+  <div class="container">
+    <h1>Expenses <span ng-if="$state.includes('expenses.view')">with {{friendName}}</span></h1>
+    <button class="btn btn-success pull-right" ng-if="!$state.includes('expenses.add')" ui-sref="expenses.add">Add Expense</button>
+  </div>
+</header>
+<br>
+<div ui-view />

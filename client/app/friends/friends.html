@@ -6,9 +6,9 @@
       <h1 class="page-header">Friends</h1>
       <div ng-hide="friends.length">You have no friends :-( </div>
       <ul ng-repeat="friend in friends">
-        <li><span class="glyphicon glyphicon-minus-sign" ng-click="removeFriend($index)"></span> {{friend}}</li>
+        <li><span class="glyphicon glyphicon-minus-sign" ng-click="removeFriend($index)"></span> {{friend.friendName}}</li>
       </ul>
-      <input ng-model="newFriend" /><span class="glyphicon glyphicon-plus-sign" ng-click="addFriend()"></span>
+      <input ng-model="newFriend" ng-keydown="$event.which === 13 && addFriend()" /><span class="glyphicon glyphicon-plus-sign" ng-click="addFriend()"></span>
     </div>
   </div>
 </div>

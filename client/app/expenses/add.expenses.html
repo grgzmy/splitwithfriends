@@ -1,0 +1,17 @@
+<div>
+	<div class="well well-sm col-lg-8 col-lg-offset-2">
+		<label class="col-lg-3">Split With</label>
+		<span class="col-lg-3" ng-repeat="fr in addedFriends">{{fr.friendName}}</span>
+	</div>
+	<div class="well well-sm col-lg-8 col-lg-offset-2">
+		<label class="col-lg-3">Your Friends</label>	
+		<span class="col-lg-3" ng-repeat="fr in friendsToAdd" ng-click="addFriend($index)">{{fr.friendName}}</span>
+	</div>
+
+	<div class="col-lg-6 col-lg-offset-3">
+		<input ng-model='amount' type="number" placeholder="Amount" /><input ng-model='note' placeholder="Note" />
+		<button ng-disabled="!addedFriends.length" class="btn btn-success" ng-click="split()">Split Equally</button>
+		<button ng-disabled="!addedFriends.length" class="btn btn-primary" ng-click="iPaid()">I Paid</button>
+		<button ng-disabled="!addedFriends.length" class="btn btn-danger" ng-click="theyPaid()">They Paid</button>
+	</div>
+</div>

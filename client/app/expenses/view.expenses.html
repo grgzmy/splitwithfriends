@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+   		<div ng-include="'app/expenses/total.expenses.html'"></div>
+   		
+		<input ng-model="expenseFilter" placeholder="Search for Expense" />
+      	<div ng-repeat="expense in expenses | filter:expenseFilter">
+        <span class="col-md-3 "><span class="glyphicon glyphicon-minus-sign" ng-click="removeExpense($index)"></span> {{expense.note}}</span>
+        <span class="col-md-3 col-md-offset-3">{{expense.amount}}</span>
+        <span class="col-md-6 col-md-offset-6">
+      </div>
+    </div>
+  </div>
+</div>

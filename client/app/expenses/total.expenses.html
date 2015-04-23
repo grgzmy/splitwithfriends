@@ -1,0 +1,5 @@
+<div>
+	<span class="col-lg-4" ng-class="{red: totals.youOwe < 0, blue: totals.youOwe === 0}">You owe: {{totals.youOwe * -1}}</span>
+	<span class="col-lg-4" ng-class="{green: totals.youAreOwed > 0, blue: totals.youOwe === 0}">You're owed: {{totals.youAreOwed}}</span>
+	<span class="col-lg-4" ng-class="{red: totals.youOwe < 0, green: totals.youAreOwed > 0, blue: totals.youOwe === 0}">Net: {{totals.net}}</span>
+</div>

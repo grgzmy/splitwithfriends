@@ -4,12 +4,12 @@ angular.module('splitwithfriendsApp')
   .controller('NavbarCtrl', function ($scope, $location) {
     $scope.menu = [
       {
-        'title': 'Home',
-        'link': '/'
+        'title': 'Friends',
+        'link': '/#/friends'        
       },
       {
-        'title': 'Friends',
-        'link': '/friends'        
+        'title': 'Expenses',
+        'link': '/#/expenses/list'        
       }
     ];
 

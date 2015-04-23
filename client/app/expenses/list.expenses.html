@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+		<div ng-include="'app/expenses/total.expenses.html'"></div>
+      	<input ng-model="friendFilter" placeholder="Search for Friend" />
+      	<div ng-repeat="expense in expenses | filter:friendFilter">
+        	<span class="col-md-3 "><a href="#/expenses/view/{{expense.friendId}}">{{expense.friendName}}</a></span>
+        	<span class="col-md-3 col-md-offset-3">{{expense.total}}</span>
+        	<span class="col-md-6 col-md-offset-6"></span>
+      </div>
+    </div>
+  </div>
+</div>
