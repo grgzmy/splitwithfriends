@@ -75,7 +75,7 @@ FriendController.prototype = {
     var self = this;
     var id = req.param('id');
 
-    self.FriendModel.updateItem(id, function (err, result) {
+    self.FriendModel.deleteItem(id, function (err, result) {
         if (err) {
             throw (err);
         }

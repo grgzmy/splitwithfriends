@@ -11,27 +11,77 @@
 
 var _ = require('lodash');
 
-// Get list of expenses
-exports.index = function(req, res) {
-  res.json([]);
+function ExpenseController(ExpenseModel){
+  this.ExpenseModel = ExpenseModel;
+}
+
+ExpenseController.prototype = {
+  // Get list of expenses
+  index: function(req, res) {
+    var self = this;
+
+    self.ExpenseModel.find({
+        query: 'SELECT * FROM root r'
+    }, function (err, items) {
+        if (err) {
+            throw (err);
+        }
+        res.json(items);
+    });
+  },
+
+  // Get expense by id
+  show: function(req, res) {
+    var self = this;
+    var id = req.param('id');
+
+    self.ExpenseModel.getItem(id, function (err, expense) {
+        if (err) {
+            throw (err);
+        }
+        res.json(expense);
+    });
+  },
+
+  // Create new expense
+  create: function(req, res) {
+    var self = this;
+    var item = req.body;
+
+    self.ExpenseModel.addItem(item, function (err, expense) {
+        if (err) {
+            throw (err);
+        }
+        res.json(expense);
+    });
+  },
+
+  // Update expense
+  update: function(req, res) {
+    var self = this;
+    var id = req.param('id');
+    var item = req.body;
+
+    self.ExpenseModel.updateItem(id, item, function (err, expense) {
+        if (err) {
+            throw (err);
+        }
+        res.json(expense);
+    });
+  },
+
+  // Destroy expense
+  destroy: function(req, res) {
+    var self = this;
+    var id = req.param('id');
+
+    self.ExpenseModel.deleteItem(id, function (err, result) {
+        if (err) {
+            throw (err);
+        }
+        res.json(result);
+    });
+  }
 };
 
-// Get expense by id
-exports.show = function(req, res) {
-  res.json([]);
-}
-
-// Create new expense
-exports.create = function(req, res) {
-  res.json([]);
-}
-
-// Update expense
-exports.update = function(req, res) {
-  res.json([]);
-}
-
-// Destroy expense
-exports.destroy = function(req, res) {
-  res.json([]);
-}
+module.exports = ExpenseController;
