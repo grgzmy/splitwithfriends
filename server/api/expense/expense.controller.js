@@ -45,15 +45,18 @@ ExpenseController.prototype = {
 
   // Create new expense
   create: function(req, res) {
+    var i = null;
     var self = this;
-    var item = req.body;
+    var items = req.body;
 
-    self.ExpenseModel.addItem(item, function (err, expense) {
-        if (err) {
-            throw (err);
-        }
-        res.json(expense);
-    });
+    for (i in items){
+      self.ExpenseModel.addItem(items[i], function (err, expense) {
+          if (err) {
+              throw (err);
+          }
+          res.json(expense);
+      });
+    }
   },
 
   // Update expense

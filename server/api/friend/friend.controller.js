@@ -46,14 +46,17 @@ FriendController.prototype = {
   // Create new friend
   create: function(req, res) {
     var self = this;
-    var item = req.body;
+    var i = 0;
+    var items = req.body;
 
-    self.FriendModel.addItem(item, function (err, friend) {
-        if (err) {
-            throw (err);
-        }
-        res.json(friend);
-    });
+    for(i in items){
+      self.FriendModel.addItem(items[i], function (err, friend) {
+          if (err) {
+              throw (err);
+          }
+          res.json(friend);
+      });
+    }
   },
 
   // Update friend
