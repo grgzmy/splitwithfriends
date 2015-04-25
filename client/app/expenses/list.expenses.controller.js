@@ -23,5 +23,3 @@ app.controller('ExpensesListCtrl', ['$scope', '$expenses', function($scope, $exp
 	$scope.totals = $expenses.expenses.totals;
 
 }]);
-
-

@@ -12,7 +12,7 @@ angular.module('splitwithfriendsApp').controller('AddExpenseCtrl', ['$scope', '$
 
 
 	function add(amount){
-		angular.forEach($scope.friendsToAdd, function(friend){
+		angular.forEach($scope.addedFriends, function(friend){
 			var exp = {friendId: friend.id, amount: amount, note: $scope.note};
 			expenses.push(exp);
 			if($expenses.byFriend[friend.id]){
@@ -24,11 +24,11 @@ angular.module('splitwithfriendsApp').controller('AddExpenseCtrl', ['$scope', '$
 		$expenses.add(expenses);
 		$expenses.expenses.list.concat[expenses];
 
-		$state.go('expenses.list');		
+		$state.go('expenses.list');
 	}
 
 	$scope.split = function(){
-		var perPerson = $scope.amount / ($scope.frinedsToAdd + 1);
+		var perPerson = $scope.amount / ($scope.addedFriends + 1);
 		add(perPerson);
 	};
 

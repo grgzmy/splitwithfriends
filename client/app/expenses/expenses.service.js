@@ -47,7 +47,7 @@ angular.module('splitwithfriendsApp').service('$expenses', ['$http', function($h
 		};
 
 
-		//this.get();
+		this.get();
 	};
 
 	Expenses.prototype.get = function(){
@@ -66,13 +66,14 @@ angular.module('splitwithfriendsApp').service('$expenses', ['$http', function($h
 	};
 
 	Expenses.prototype.add = function(newExpenses){
+		var that = this;
 		$http({
 			method: 'POST',
 			url: api,
 			data: newExpenses //[{friend: friend, amount: amount}]
 		}).success(function(){
 			console.log("Success adding expenses");
-
+			that.get();
 		}).error(function(){
 			console.log("Error adding expenses");
 		});
@@ -89,7 +90,7 @@ angular.module('splitwithfriendsApp').service('$expenses', ['$http', function($h
 		}).error(function(){
 			console.log("Error deleting expense");
 		});
-	};	
+	};
 
 	Expenses.prototype.getForFriend = function(friendId){
 		var that = this;

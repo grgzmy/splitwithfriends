@@ -9,7 +9,8 @@
 
 'use strict';
 
-var _ = require('lodash');
+var _ = require('lodash')
+  , async = require('async');
 
 function ExpenseController(ExpenseModel){
   this.ExpenseModel = ExpenseModel;
@@ -49,14 +50,13 @@ ExpenseController.prototype = {
     var self = this;
     var items = req.body;
 
-    for (i in items){
-      self.ExpenseModel.addItem(items[i], function (err, expense) {
-          if (err) {
-              throw (err);
-          }
-          res.json(expense);
-      });
-    }
+    async.map(items, self.ExpenseModel.addItem.bind(self.ExpenseModel),
+        function(err, results){
+      if (err) {
+          throw (err);
+      }
+      res.json(results);
+    });
   },
 
   // Update expense
