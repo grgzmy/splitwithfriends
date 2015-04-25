@@ -9,8 +9,6 @@
 
 'use strict';
 
-var _ = require('lodash');
-
 function FriendController(FriendModel){
   this.FriendModel = FriendModel;
 }

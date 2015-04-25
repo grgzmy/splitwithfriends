@@ -9,8 +9,7 @@
 
 'use strict';
 
-var _ = require('lodash')
-  , async = require('async');
+var async = require('async');
 
 function ExpenseController(ExpenseModel){
   this.ExpenseModel = ExpenseModel;
