@@ -15,54 +15,25 @@ angular.module('splitwithfriendsApp').service('$expenses', ['$http', function($h
 			});
 			return result;
 		};
-		this.expenses = {
-			list: [
-				{note: "coffee", friendId: "1", friendName: 'George', amount: 14},
-				{note: "coffee", friendId: "1", friendName: 'George', amount: 14},
-				{note: "coffee", friendId: "1", friendName: 'George', amount: 14},
-				{note: "coffee", friendId: "2", friendName: 'Rami', amount: 14},
-				{note: "coffee", friendId: "2", friendName: 'Rami', amount: 14},
-				{note: "coffee", friendId: "3", friendName: 'Sara', amount: 14},
-				{note: "coffee",  friendId: "3", friendName: 'Sara', amount: 14},
-				{note: "coffee", friendId: "3", friendName: 'Sara', amount: 14}
-			]
-		};
-		this.expenses.totals = that.computeTotals(that.expenses.list)
-
-		this.byFriend = {
-			"1":[
-				{note: "coffee", friendId: "1", friendName: 'George', amount: 14},
-				{note: "coffee", friendId: "1", friendName: 'George', amount: 14},
-				{note: "coffee", friendId: "1", friendName: 'George', amount: 14}
-			],
-			"2":[
-				{note: "coffee", friendId: "2", friendName: 'Rami', amount: 14},
-				{note: "coffee", friendId: "2", friendName: 'Rami', amount: 14}
-			],
-			"3": [
-				{note: "coffee", friendId: "3", friendName: 'Sara', amount: 14},
-				{note: "coffee", friendId: "3", friendName: 'Sara', amount: 14},
-				{note: "coffee", friendId: "3", friendName: 'Sara', amount: 14}
-			]
-		};
-
-
-		this.get();
+		this.expenses = {list: [], totals: {}};
+		this.byFriend = {};
 	};
 
 	Expenses.prototype.get = function(){
 		var that = this;
-		$http({
+		var promise = $http({
 			method: 'GET',
 			url: api,
-		}).success(function(resp){
+		});
+		promise.success(function(resp){
 			that.expenses = {
 				list: resp,
 				totals: that.computeTotals(resp)
-			}
+			};
 		}).error(function(){
 			console.log("Error fetching expenses");
 		});
+		return promise;
 	};
 
 	Expenses.prototype.add = function(newExpenses){
@@ -71,9 +42,10 @@ angular.module('splitwithfriendsApp').service('$expenses', ['$http', function($h
 			method: 'POST',
 			url: api,
 			data: newExpenses //[{friend: friend, amount: amount}]
-		}).success(function(){
+		}).success(function(res){
 			console.log("Success adding expenses");
-			that.get();
+			that.expenses.list = that.expenses.list.concat(res);
+			that.expenses.totals = that.computeTotals(that.expenses.list);
 		}).error(function(){
 			console.log("Error adding expenses");
 		});
@@ -82,8 +54,7 @@ angular.module('splitwithfriendsApp').service('$expenses', ['$http', function($h
 	Expenses.prototype.delete = function(expense){
 		$http({
 			method: 'DELETE',
-			url: api,
-			data: expense
+			url: api + '/' + expense.id,
 		}).success(function(){
 			console.log("Success deleting expense");
 

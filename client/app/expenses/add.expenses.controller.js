@@ -1,7 +1,9 @@
 angular.module('splitwithfriendsApp').controller('AddExpenseCtrl', ['$scope', '$friends', '$expenses', '$state', function($scope, $friends, $expenses, $state){
+	$friends.get().success(function(){
+		$scope.friendsToAdd = angular.copy($friends.list);
+		$scope.addedFriends = [];
+	});
 
-	$scope.friendsToAdd = angular.copy($friends.list);
-	$scope.addedFriends = [];
 
 	var expenses = [];
 
@@ -15,20 +17,14 @@ angular.module('splitwithfriendsApp').controller('AddExpenseCtrl', ['$scope', '$
 		angular.forEach($scope.addedFriends, function(friend){
 			var exp = {friendId: friend.id, amount: amount, note: $scope.note};
 			expenses.push(exp);
-			if($expenses.byFriend[friend.id]){
-				$expenses.byFriend[friend.id].push(exp);
-			}else{
-				$expenses.byFriend[friend.id] = [exp];
-			}
 		});
 		$expenses.add(expenses);
-		$expenses.expenses.list.concat[expenses];
 
 		$state.go('expenses.list');
 	}
 
 	$scope.split = function(){
-		var perPerson = $scope.amount / ($scope.addedFriends + 1);
+		var perPerson = $scope.amount / ($scope.addedFriends.length + 1);
 		add(perPerson);
 	};
 
@@ -37,7 +33,7 @@ angular.module('splitwithfriendsApp').controller('AddExpenseCtrl', ['$scope', '$
 	};
 
 	$scope.theyPaid = function(){
-		add(-1 * $scope.admount);
+		add(-1 * $scope.amount);
 	};
 
 

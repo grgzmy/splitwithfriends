@@ -1,6 +1,6 @@
 var app = angular.module('splitwithfriendsApp');
 
-app.controller('ExpensesListCtrl', ['$scope', '$expenses', function($scope, $expenses){
+app.controller('ExpensesListCtrl', ['$scope', '$expenses', '$friends', '$filter', function($scope, $expenses, $friends, $filter){
 	function aggreagte(expenses){
 		var map = {};
 
@@ -8,7 +8,7 @@ app.controller('ExpensesListCtrl', ['$scope', '$expenses', function($scope, $exp
 			if(map[expense.friendId]){
 				map[expense.friendId].total += expense.amount;
 			}else{
-				map[expense.friendId] = {friendId: expense.friendId, friendName: expense.friendName, total: expense.amount};
+				map[expense.friendId] = {friendId: expense.friendId, friendName: getFriendName(expense.friendId), total: expense.amount};
 			}
 		});
 
@@ -19,7 +19,14 @@ app.controller('ExpensesListCtrl', ['$scope', '$expenses', function($scope, $exp
 		return output;
 	};
 
-	$scope.expenses = aggreagte($expenses.expenses.list);
-	$scope.totals = $expenses.expenses.totals;
+	function getFriendName(id){
+		return $filter('filter')($friends.list, id)[0].friendName;
+	};
+
+	$expenses.get().success(function(){
+		$scope.expenses = aggreagte($expenses.expenses.list);
+		$scope.totals = $expenses.expenses.totals;
+	});
+
 
 }]);

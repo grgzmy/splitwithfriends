@@ -2,18 +2,14 @@ angular.module('splitwithfriendsApp').service('$friends', ['$http', function($ht
 	var api = '/api/friends/';
 	var Friends = function(){
 		this.list = [
-			{id: 1, friendName: "George"},
-			{id: 2, friendName: "Rami"},
-			{id: 3, friendName: "Sara"},
 		];
-		//this.get()
+		this.get();
 	};
 
 	Friends.prototype.delete = function(byebye){
 		$http({
 			method: 'DELETE',
-			url: api,
-			data: byebye
+			url: api + '/' + byebye.id
 		}).success(function(){
 			console.log('Successfully deleted friend');
 		}).error(function(){
@@ -22,7 +18,7 @@ angular.module('splitwithfriendsApp').service('$friends', ['$http', function($ht
 	};
 
 	Friends.prototype.add = function(friend){
-		$http({
+		var promise = $http({
 			method: 'POST',
 			url: api,
 			data: friend
@@ -35,11 +31,13 @@ angular.module('splitwithfriendsApp').service('$friends', ['$http', function($ht
 
 	Friends.prototype.get = function(){
 		var that = this;
-		$http.get(api).success(function(resp){
+		var promise = $http.get(api)
+		promise.success(function(resp){
 			angular.copy(resp, that.list);
 		}).error(function(){
 			console.log('Error getting friends');
 		});
+		return promise;
 	}
 	return new Friends();
 }]);
